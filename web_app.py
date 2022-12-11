@@ -57,22 +57,6 @@ print("index created")
 # Home URL "/"
 @app.route('/')
 def index():
-    print("starting home url /...")
-
-    # flask server creates a session by persisting a cookie in the user's browser.
-    # the 'session' object keeps data between multiple requests
-    session['some_var'] = "IRWA 2022 home"
-
-    user_agent = request.headers.get('User-Agent')
-    print("Raw user browser:", user_agent)
-
-    user_ip = request.remote_addr
-    agent = httpagentparser.detect(user_agent)
-
-    print("Remote IP: {} - JSON user browser {}".format(user_ip, agent))
-
-    print(session)
-
     return render_template('index.html', page_title="Welcome")
 
 
@@ -89,8 +73,6 @@ def search_form_post():
     found_count = len(results)
     session['last_found_count'] = found_count
 
-    print(session)
-
     return render_template('results.html', results_list=results, page_title="Results", found_counter=found_count)
 
 
@@ -99,19 +81,8 @@ def doc_details():
     # getting request parameters:
     # user = request.args.get('user')
 
-    print("doc details session: ")
-    print(session)
-
-    res = session["some_var"]
-
-    print("recovered var from session:", res)
-
     # get the query string parameters from request
     clicked_doc_id = request.args["id"]
-    p1 = int(request.args["search_id"])  # transform to Integer
-    p2 = int(request.args["param2"])  # transform to Integer
-    print("click in id={}".format(clicked_doc_id))
-
     # store data in statistics table 1
     if clicked_doc_id in analytics_data.fact_clicks.keys():
         analytics_data.fact_clicks[clicked_doc_id] += 1

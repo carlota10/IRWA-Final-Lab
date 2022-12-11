@@ -56,21 +56,14 @@ def _build_tags(row):
 
 
 def _build_url(row):
-    url = ""
-    try:
-        url = row["entities"]["url"]["urls"][0]["url"]  # tweet URL
-    except:
-        try:
-            url = row["retweeted_status"]["extended_tweet"]["entities"]["media"][0]["url"]  # Retweeted
-        except:
-            url = ""
+    url = 'https://twitter.com/WHO/status/'+row['id_str']
+
     return url
 
 
 def _clean_hashtags_and_urls(df):
     df["Hashtags"] = df["hashtags"].apply(_build_tags)
     df["Url"] = df.apply(lambda row: _build_url(row), axis=1)
-    # df["Url"] = "TODO: get url from json"
     df.drop(columns=["entities"], axis=1, inplace=True)
 
 
