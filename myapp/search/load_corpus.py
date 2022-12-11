@@ -26,7 +26,6 @@ def _load_corpus_as_dataframe(path):
     json_data = load_json_file(path)
     tweets_df = _load_tweets_as_dataframe(json_data)
     _clean_hashtags_and_urls(tweets_df)
-    # Rename columns to obtain: Tweet | Username | Date | Hashtags | Likes | Retweets | Url | Language
     corpus = tweets_df.rename(
         columns={"id": "Id", "full_text": "Tweet", "screen_name": "Username", "created_at": "Date",
                  "favorite_count": "Likes",
@@ -51,8 +50,6 @@ def _load_tweets_as_dataframe(json_data):
 
 def _build_tags(row):
     tags = []
-    # for ht in row["hashtags"]:
-    #     tags.append(ht["text"])
     for ht in row:
         tags.append(ht["text"])
     return tags

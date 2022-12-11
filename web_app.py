@@ -43,11 +43,15 @@ full_path = os.path.realpath(__file__)
 path, filename = os.path.split(full_path)
 # print(path + ' --> ' + filename + "\n")
 # load documents corpus into memory.
-file_path = path + "/tweets-data-who.json"
+file_path = path + "/tweets-data-WHO.json"
 
 # file_path = "../../tweets-data-who.json"
 corpus = load_corpus(file_path)
 print("loaded corpus. first elem:", list(corpus.values())[0])
+
+print("\n -------creating tf-idf index-------")
+search_engine.create_index(corpus)
+print("index created")
 
 
 # Home URL "/"
@@ -57,7 +61,7 @@ def index():
 
     # flask server creates a session by persisting a cookie in the user's browser.
     # the 'session' object keeps data between multiple requests
-    session['some_var'] = "IRWA 2021 home"
+    session['some_var'] = "IRWA 2022 home"
 
     user_agent = request.headers.get('User-Agent')
     print("Raw user browser:", user_agent)
